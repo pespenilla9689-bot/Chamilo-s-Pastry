@@ -1,3 +1,5 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css");
+
 :root {
   --pastel-yellow: #fff5a8; /* soft yellow */
   --pastel-purple: #d9c8ff; /* soft lavender */
@@ -32,7 +34,7 @@ body {
   background: radial-gradient(
       circle at top left,
       var(--pastel-yellow) 0,
-      #ffffff 45%
+      #f5def2 35%
     )
     fixed;
   min-height: 100vh;
@@ -199,6 +201,19 @@ input[type="checkbox"] {
 }
 
 /* Small cart bubble */
+.nav-cart {
+  position: relative;
+  background: transparent;
+  border: none;
+  color: var(--deep-plum);
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: color var(--transition-base), transform var(--transition-base);
+}
+.nav-cart:hover {
+  color: var(--accent-pink);
+  transform: translateY(-2px);
+}
 
 .cart-badge {
   min-width: 1.4rem;

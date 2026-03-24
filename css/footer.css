@@ -98,7 +98,7 @@
   display: flex;
   gap: 0.7rem;
   margin-top: 1rem;
-  justify-content: center;   /* keeps the icons centered under the brand column */
+  justify-content: left;   /* keeps the icons centered under the brand column */
 }
 
 /* Individual round social buttons (the white circles) */

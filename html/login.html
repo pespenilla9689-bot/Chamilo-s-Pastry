@@ -1,5 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+  <style>
+
+  html, body {
+    height: 100%;
+    margin: 0;
+  }
+  .login-wrapper {
+    min-height: 100vh;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 1rem;
+  }
+</style>
   <head>
     <meta charset="UTF-8" />
     <title>Log in • Chamilo's Pastry</title>
@@ -11,6 +27,8 @@
       href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <link rel="icon" type="image/x-icon" href="/assets/logo.png">
+  
     <!-- CSS -->
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/nav.css" />
@@ -50,36 +68,6 @@
   </div>
   </div>
 
-    <!-- Header -->
-    <header class="site-header">
-      <div class="container nav-bar">
-        <div class="brand">
-          <div class="brand-logo">
-            <img src="/assets/logo.png" alt="Sweet Layers Logo" />
-          </div>
-        </div>
-
-        <button class="nav-toggle" aria-label="Toggle navigation">☰</button>
-
-        <nav>
-          <ul class="nav-links">
-            <li><a href="/html/index.html">Home</a></li>
-            <li><a href="/html/menu.html">Menu</a></li>
-            <li><a href="/html/about.html">About</a></li>
-            <li><a href="/html/contact.html">Contact</a></li>
-          </ul>
-        </nav>
-
-        <div class="nav-actions">
-          <button class="nav-cart" type="button">
-            <span class="nav-cart-icon">🛒</span>
-            <span class="cart-badge" id="cartCount">0</span>
-          </button>
-          <a href="/html/login.html" class="btn btn-ghost">Log in</a>
-        </div>
-      </div>
-    </header>
-
     <main class="login-wrapper">
       <div class="login-card fade-in-up">
         <div class="login-badge">Client portal</div>
@@ -115,6 +103,16 @@
             <input type="password" id="authPassword" minlength="4" required />
           </div>
 
+<div class="login-field">
+  <label
+    class="login-label"
+    for="authPassword"
+    style="cursor:pointer; display:inline-block; transition: color 0.2s ease;"
+    onmouseover="this.style.color='#9b6fc7'"
+    onmouseout="this.style.color=''"
+  ><u>Forgot Password?</u></label>
+</div>
+
           <div class="login-actions">
             <button class="btn btn-primary" type="submit" id="authSubmitBtn">
               Log in
@@ -126,6 +124,7 @@
             browser (no backend server).
           </p>
         </form>
+        
       </div>
     </main>
 
@@ -189,6 +188,79 @@
     © <span id="year"></span> Chamilo's Pastry. All rights reserved.
   </div>
 </footer>
+<script>
+  const DEMO = { name: "Demo User", email: "demo@chamilo.com", password: "1234" };
+
+  (function seedDemo() {
+    const users = JSON.parse(localStorage.getItem("chamilo_users") || "[]");
+    if (!users.find(u => u.email === DEMO.email)) {
+      users.push(DEMO);
+      localStorage.setItem("chamilo_users", JSON.stringify(users));
+    }
+  })();
+
+  // ── Tab toggle ──────────────────────────────────────────────────────────
+  document.querySelectorAll(".auth-mode-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".auth-mode-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      const mode = btn.dataset.mode;
+      document.getElementById("authMode").value = mode;
+      document.getElementById("nameField").style.display = mode === "register" ? "" : "none";
+      document.getElementById("authSubmitBtn").textContent = mode === "register" ? "Create account" : "Log in";
+      clearError();
+    });
+  });
+
+  // ── Show/clear inline error ─────────────────────────────────────────────
+  function showError(msg) {
+    let el = document.getElementById("authError");
+    if (!el) {
+      el = document.createElement("p");
+      el.id = "authError";
+      el.style.cssText = "color:#c0392b;font-size:0.85rem;margin:8px 0 0;text-align:center;";
+      document.getElementById("authForm").insertBefore(el, document.querySelector(".login-actions").nextSibling);
+    }
+    el.textContent = msg;
+  }
+
+  function clearError() {
+    const el = document.getElementById("authError");
+    if (el) el.textContent = "";
+  }
+
+  // ── Form submit ─────────────────────────────────────────────────────────
+  document.getElementById("authForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    e.stopImmediatePropagation(); // prevent script.js from also handling this
+    clearError();
+
+    const mode     = document.getElementById("authMode").value;
+    const email    = document.getElementById("authEmail").value.trim().toLowerCase();
+    const password = document.getElementById("authPassword").value;
+    const name     = document.getElementById("authName")?.value.trim();
+    const users    = JSON.parse(localStorage.getItem("chamilo_users") || "[]");
+
+    if (mode === "register") {
+      if (users.find(u => u.email === email)) {
+        showError("An account with that email already exists. Please log in instead.");
+        return;
+      }
+      users.push({ name, email, password });
+      localStorage.setItem("chamilo_users", JSON.stringify(users));
+      localStorage.setItem("chamilo_session", JSON.stringify({ name, email }));
+      window.location.href = "/html/menu.html";
+    } else {
+      const user = users.find(u => u.email === email && u.password === password);
+      if (!user) {
+        showError("Incorrect email or password. Try demo@chamilo.com / 1234");
+        return;
+      }
+      localStorage.setItem("chamilo_session", JSON.stringify({ name: user.name, email: user.email }));
+      window.location.href = "/html/menu.html";
+    }
+  });
+</script>
 
     <script src="/js/script.js"></script>
   </body>

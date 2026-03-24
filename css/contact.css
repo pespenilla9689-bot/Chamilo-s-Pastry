@@ -9,7 +9,7 @@
 }
 
 .contact-card {
-  background: rgba(255, 255, 255, 0.97);
+  background: rgba(255, 250, 207, 0.97);
   border-radius: 24px;
   padding: 2rem 1.8rem;
   box-shadow: var(--shadow-soft);
@@ -35,6 +35,7 @@
 
 .contact-field {
   margin-bottom: 1rem;
+  color: rgba(255, 252, 226, 0.97)
 }
 
 .contact-label {
