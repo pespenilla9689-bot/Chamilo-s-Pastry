@@ -1,7 +1,4 @@
-/* style.css - global styles, colors, typography */
-
 :root {
-  /* PASTEL COLOR PALETTE — CLEAN, SOFT, CONSISTENT */
   --pastel-yellow: #fff5a8; /* soft yellow */
   --pastel-purple: #d9c8ff; /* soft lavender */
   --accent-purple: #7a5fa8; /* deeper pastel purple */
@@ -41,7 +38,7 @@ body {
   min-height: 100vh;
 }
 
-/* Sweet page entrance animation */
+/* Animation */
 body.page-enter {
   opacity: 0;
   animation: pageEnter 0.7s ease-out forwards;
@@ -179,7 +176,6 @@ select:focus {
   box-shadow: 0 0 0 3px rgba(255, 199, 217, 0.45);
 }
 
-/* Normal-looking radios (used in checkout methods) */
 input[type="radio"],
 input[type="checkbox"] {
   width: auto;
@@ -189,7 +185,7 @@ input[type="checkbox"] {
   background: transparent;
 }
 
-/* Sweet badge / pill */
+/* pill */
 
 .pill {
   display: inline-flex;
@@ -242,9 +238,7 @@ input[type="checkbox"] {
   }
 }
 
-/* ============================
-   CART DROPDOWN UNDER NAV CART BUTTON
-   ============================ */
+/* cart dropdown */
 
 .cart-overlay {
   position: fixed;
